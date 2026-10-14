@@ -1,0 +1,532 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Homework Planner</title>
+<meta name="google-site-verification" content="EfDgxK6G4DGK2oCz4ANlRAXdo21QdFYd_zMQGxJ8-MQ" />
+    <style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 40px 20px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f4f7fc;
+    color: #172033;
+}
+
+.planner {
+    background: #ffffff;
+    max-width: 720px;
+    margin: auto;
+    padding: 32px;
+    border: 1px solid #e6ebf3;
+    border-radius: 24px;
+    box-shadow: 0 12px 40px rgba(30, 55, 90, 0.08);
+}
+
+h1 {
+    color: #2457d6;
+    font-size: 32px;
+    margin: 0 0 10px;
+    letter-spacing: -1px;
+}
+
+h2 {
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 16px;
+}
+
+p {
+    color: #718096;
+    line-height: 1.6;
+}
+
+.form {
+    display: grid;
+    gap: 12px;
+}
+
+input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #dbe3ef;
+    border-radius: 12px;
+    background: #fbfcff;
+    color: #172033;
+    font: inherit;
+    outline: none;
+}
+
+input:focus {
+    border-color: #3972f6;
+    box-shadow: 0 0 0 3px #3972f620;
+}
+
+button {
+    padding: 11px 15px;
+    border: none;
+    border-radius: 10px;
+    background: #285ee8;
+    color: white;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+button:hover {
+    background: #1949c5;
+    transform: translateY(-1px);
+}
+
+.form button {
+    padding: 14px;
+}
+
+.progress-section {
+    margin: 20px 0;
+    padding: 22px;
+    background: linear-gradient(135deg, #eef4ff, #f7f9ff);
+    border: 1px solid #e0eaff;
+    border-radius: 18px;
+    text-align: left;
+}
+
+#taskCounter {
+    font-weight: 700;
+    color: #2457d6;
+}
+
+.progress-track {
+    width: 100%;
+    height: 12px;
+    background: #dbe6fb;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+#progressBar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #3972f6, #6d8fff);
+    border-radius: 20px;
+    transition: width 0.3s ease;
+}
+
+#progressMessage {
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+#taskList {
+    padding-left: 0;
+    list-style: none;
+}
+
+#taskList li {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 12px 0;
+    padding: 16px;
+    border: 1px solid #e8edf5;
+    border-radius: 14px;
+    background: #ffffff;
+    box-shadow: 0 3px 10px rgba(30, 55, 90, 0.03);
+}
+
+#taskList li span {
+    overflow-wrap: anywhere;
+}
+
+#taskList li span:first-child {
+    flex: 1;
+    min-width: 140px;
+    font-weight: 600;
+    color: #26334a;
+}
+
+#taskList li .done {
+    color: #159568;
+    text-decoration: line-through;
+}
+
+#taskList li button {
+    font-size: 13px;
+    padding: 9px 12px;
+}
+
+#taskList li button:last-child {
+    background: #fff0f0;
+    color: #c43c46;
+}
+
+#taskList li button:last-child:hover {
+    background: #ffe0e0;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 16px 10px;
+    }
+
+    .planner {
+        padding: 22px 16px;
+        border-radius: 18px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+
+    #taskList li {
+        padding: 12px;
+    }
+}
+
+/* Dashboard layout */
+body {
+    padding: 24px;
+}
+
+.dashboard {
+    display: flex;
+    max-width: 1200px;
+    min-height: 85vh;
+    margin: auto;
+    background: #ffffff;
+    border: 1px solid #e6ebf3;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(30, 55, 90, 0.08);
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    padding: 28px 18px;
+    background: #172b4d;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar .brand {
+    color: white;
+    font-size: 24px;
+    margin: 0 0 32px;
+}
+
+.sidebar-label {
+    color: #aabbd6;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.nav-item {
+    display: block;
+    padding: 13px;
+    margin: 5px 0;
+    border-radius: 10px;
+    color: #dce6f7;
+    text-decoration: none;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background: #2b4268;
+    color: white;
+}
+
+.sidebar-note {
+    margin-top: auto;
+    padding: 15px;
+    background: #243b60;
+    border-radius: 12px;
+}
+
+.sidebar-note strong {
+    color: white;
+}
+
+.sidebar-note p {
+    color: #c5d2e7;
+    font-size: 13px;
+    margin-bottom: 0;
+}
+
+/* Main content */
+.dashboard .planner {
+    flex: 1;
+    min-width: 0;
+    max-width: none;
+    margin: 0;
+    padding: 36px;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+@media (max-width: 650px) {
+    body {
+        padding: 10px;
+    }
+
+    .dashboard {
+        flex-direction: column;
+        border-radius: 16px;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 18px;
+    }
+
+    .sidebar .brand {
+        margin-bottom: 12px;
+    }
+
+    .sidebar-note {
+        margin-top: 16px;
+    }
+
+    .dashboard .planner {
+        padding: 22px 16px;
+    }
+}
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin: 30px 0;
+}
+
+.summary-card {
+    padding: 22px;
+    background: #ffffff;
+    border: 1px solid #dce6f5;
+    border-radius: 16px;
+    box-shadow: 0 5px 18px rgba(30, 55, 90, 0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.summary-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(30, 55, 90, 0.12);
+}
+
+.summary-card h3 {
+    margin-top: 0;
+    color: #2457d6;
+}
+
+.summary-card p {
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+@media (max-width: 650px) {
+    .summary-cards {
+        grid-template-columns: 1fr;
+    }
+}
+a.summary-card {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+        <h2 class="brand">StudySpace</h2>
+        <p class="sidebar-label">YOUR WORKSPACE</p>
+
+        <a class="nav-item active" href="index.html">
+            ▦ Dashboard
+        </a>
+
+        <a class="nav-item" href="tasks.html">
+            ✓ My Tasks
+        </a>
+
+        <div class="sidebar-note">
+            <strong>Keep going!</strong>
+            <p>Small steps lead to big results.</p>
+        </div>
+    </aside>
+
+<main class="planner" id="dashboard">
+
+    <header class="dashboard-header">
+        <h1>Student Dashboard 🎓</h1>
+        <p>Welcome back! Ready to study?</p>
+    </header>
+
+
+
+<div class="summary-cards">
+
+    <a class="summary-card" href="tasks.html">
+        <h3>📚 Total Tasks</h3>
+        <p id="totalTasks">0</p>
+        <span>View all homework →</span>
+    </a>
+
+    <a class="summary-card" href="tasks.html">
+        <h3>✅ Completed</h3>
+        <p id="completedTasks">0</p>
+        <span>See finished tasks →</span>
+    </a>
+
+    <a class="summary-card" href="tasks.html">
+        <h3>⏳ Pending</h3>
+        <p id="pendingTasks">0</p>
+        <span>See unfinished tasks →</span>
+    </a>
+
+</div>
+
+
+    </div>
+
+    <a class="nav-item" href="tasks.html">Go to My Tasks →</a>
+
+</main>
+
+</div>
+
+    <script>
+        const form = document.getElementById("homeworkForm");
+        const taskInput = document.getElementById("task");
+        const deadlineInput = document.getElementById("deadline");
+        const taskList = document.getElementById("taskList");
+        let tasks = JSON.parse(localStorage.getItem("homeworkTasks")) || [];
+
+function saveTasks() {
+    localStorage.setItem("homeworkTasks", JSON.stringify(tasks));
+}
+
+function showTasks() {
+    taskList.innerHTML = "";
+
+const totalTasks = tasks.length;
+const completedTasks = tasks.filter(function(task) {
+    return task.done;
+}).length;
+
+const taskCounter = document.getElementById("taskCounter");
+const progressBar = document.getElementById("progressBar");
+const progressMessage = document.getElementById("progressMessage");
+
+const percentage = totalTasks === 0
+    ? 0
+    : Math.round((completedTasks / totalTasks) * 100);
+
+taskCounter.textContent =
+    completedTasks + " of " + totalTasks + " tasks completed";
+
+progressBar.style.width = percentage + "%";
+
+if (totalTasks === 0) {
+    progressMessage.textContent = "Let's get started!";
+} else if (percentage === 100) {
+    progressMessage.textContent = "Amazing! All tasks completed! 🎉";
+} else {
+    progressMessage.textContent = percentage + "% complete. Keep going!";
+}
+
+    tasks.forEach(function(task, index) {
+        const item = document.createElement("li");
+        const taskText = document.createElement("span");
+        const doneButton = document.createElement("button");
+        const deleteButton = document.createElement("button");
+
+        taskText.textContent = task.name + " — " + task.deadline;
+
+        if (task.done) {
+            taskText.classList.add("done");
+        }
+
+        doneButton.textContent = task.done ? "Undo" : "Done";
+        deleteButton.textContent = "Delete";
+
+        doneButton.addEventListener("click", function() {
+            tasks[index].done = !tasks[index].done;
+            saveTasks();
+            showTasks();
+        });
+
+        deleteButton.addEventListener("click", function() {
+            tasks.splice(index, 1);
+            saveTasks();
+            showTasks();
+        });
+
+        item.append(taskText, doneButton, deleteButton);
+        taskList.appendChild(item);
+    });
+}
+
+
+
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const taskName = taskInput.value.trim();
+    const deadline = deadlineInput.value;
+
+    if (!taskName || !deadline) {
+        return;
+    }
+
+    tasks.push({
+        name: taskName,
+        deadline: deadline,
+        done: false
+    });
+
+    saveTasks();
+    showTasks();
+
+    form.reset();
+    taskInput.focus();
+});
+showTasks();
+
+    </script>
+    
+<script>
+    const savedTasks = JSON.parse(
+        localStorage.getItem("homeworkTasks")
+    ) || [];
+
+    const completed = savedTasks.filter(function(task) {
+        return task.done;
+    }).length;
+
+    const total = savedTasks.length;
+    const pending = total - completed;
+
+    document.getElementById("totalTasks").textContent = total;
+    document.getElementById("completedTasks").textContent = completed;
+    document.getElementById("pendingTasks").textContent = pending;
+</script>
+
+</body>
+</html>
